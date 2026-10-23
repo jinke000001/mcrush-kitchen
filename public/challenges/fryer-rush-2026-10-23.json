@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "mcrush-challenge-1",
+  "rulesVersion": "mcd-three-shifts-2",
+  "title": "薯香接力 · 炸物高峰",
+  "levelId": "lunch-line",
+  "seed": 20261023,
+  "template": "fryer-rush",
+  "createdAt": "2026-10-23T07:19:23.383Z",
+  "expiresAt": "2026-10-30T07:19:23.383Z",
+  "source": {
+    "provider": "mcd-campaign-calendar",
+    "fetchedAt": "2026-10-23T07:19:23.383Z",
+    "articles": [
+      {
+        "title": "韩式风味蘸酱上新❤️就「酱」心有所「薯」",
+        "url": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "schemaVersion": "mcrush-mcp-evidence-1",
+  "observedAt": "2026-10-23T07:19:23.383Z",
+  "execution": "User-requested read-only call through the connected MCP client.",
+  "tool": "campaign_calendar",
+  "request": {
+    "specifiedDate": "2026-10-23"
+  },
+  "response": {
+    "code": 200,
+    "message": "请求成功"
+  },
+  "selectedPublicArticle": {
+    "title": "韩式风味蘸酱上新❤️就「酱」心有所「薯」",
+    "url": null,
+    "listedDates": [
+      "2026-10-23",
+      "2026-10-24"
+    ],
+    "occurrences": 2
+  },
+  "observations": [
+    "The selected article appeared on two calendar dates and was deduplicated to one challenge source.",
+    "The article copy described an October 8 start; October 23/24 calendar placement is not a launch date.",
+    "No article URL was present in the tool response; the example preserves null rather than fabricating one.",
+    "The article mentions fried chicken and potato products. The fictional challenge only changes existing fries/nuggets proportions, with no new recipe.",
+    "Only public article metadata and a query status are retained; no raw response, memberships, subscriptions, coupon data or authentication values are included."
+  ],
+  "output": "public/challenges/fryer-rush-2026-10-23.json",
+  "verification": {
+    "liveQuery": "observed-code-200",
+    "localChallengeParsing": "tested",
+    "browserImportAndFullRound": "recorded separately in README.md"
+  },
+  "authenticity": "Local observation record, not a cryptographically signed MCP receipt or official approval."
+}

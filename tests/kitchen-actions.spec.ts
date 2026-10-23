@@ -1,0 +1,35 @@
+import { test, expect } from '@playwright/test';
+import { expectHeld, held, interactKitchen, readKitchen, startKitchen, waitKitchen, walkKitchen } from './kitchen-helpers';
+
+test('真实冲刺、食材抛物线和焦糊清理可继续营业', async ({ page }) => {
+  const errors: string[] = []; page.on('pageerror', error => errors.push(String(error)));
+  await startKitchen(page, 'ai=false&prepSeconds=0&serviceSeconds=900');
+  const before = (await readKitchen(page)).actors[0];
+  await page.keyboard.down('Shift'); await page.keyboard.press('d', { delay: 200 }); await page.keyboard.up('Shift');
+  const after = (await readKitchen(page)).actors[0];
+  expect(after.x - before.x).toBeGreaterThan(.9); expect(after.stamina).toBeLessThan(1);
+  await interactKitchen(page, 'potato'); const id = held(await readKitchen(page))!.id;
+  await walkKitchen(page, { x: 4.5, y: 3.5 }); await page.keyboard.press('s', { delay: 25 });
+  await page.keyboard.down('f'); await page.waitForTimeout(250); await page.keyboard.up('f');
+  await waitKitchen(page, w => w.items.find(i => i.id === id)?.location.type === 'air');
+  await page.screenshot({ path: 'output/playwright/kitchen-actual-throw.png' });
+  await waitKitchen(page, w => w.items.find(i => i.id === id)?.location.type === 'ground');
+  const landing = (await readKitchen(page)).items.find(i => i.id === id)!.location;
+  if (landing.type !== 'ground') throw new Error('Expected an actual ground landing');
+  await walkKitchen(page, landing);
+  const actor = (await readKitchen(page)).actors[0], dx = landing.x - actor.x, dy = landing.y - actor.y;
+  if (Math.hypot(dx, dy) > .25) await page.keyboard.press(Math.abs(dx) > Math.abs(dy) ? dx > 0 ? 'd' : 'a' : dy > 0 ? 's' : 'w', { delay: 25 });
+  await expect.poll(() => page.evaluate(() => window.__MCKITCHEN__!.preview()?.itemId)).toBe(id);
+  await interactKitchen(page); await expectHeld(page, 'potato'); await interactKitchen(page, 'bin');
+  await interactKitchen(page, 'meat'); await interactKitchen(page, 'grill-a');
+  await waitKitchen(page, w => w.stations.find(s => s.id === 'grill-a')?.state === 'burnt', 25000);
+  expect((await readKitchen(page)).metrics.burnt).toBe(1);
+  await page.screenshot({ path: 'output/playwright/kitchen-burnt-food.png' });
+  await interactKitchen(page, 'grill-a'); await expectHeld(page, 'burnt'); await interactKitchen(page, 'bin');
+  await waitKitchen(page, w => w.items.length === 0);
+  expect((await readKitchen(page)).stations.find(s => s.id === 'grill-a')?.state).toBe('idle');
+  const sound = await page.evaluate(() => window.__MCKITCHEN__!.audio()) as { loaded: number; stems: number; state: string; error: string; counts: Record<string, number> };
+  expect(sound).toMatchObject({ loaded: 3, stems: 3, state: 'running', error: '' });
+  expect(sound.counts.cooked).toBeGreaterThan(0); expect(sound.counts.rejected).toBeGreaterThan(0);
+  expect(errors).toEqual([]);
+});

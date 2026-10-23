@@ -1,0 +1,735 @@
+{
+  "version": 2,
+  "collection": "McRush original miniature kitchen",
+  "units": "metres / one tile",
+  "license": "MIT (original code and generated geometry); brand names are not licensed by this manifest",
+  "generator": "scripts/make-original-assets.mjs",
+  "assets": {
+    "counter": {
+      "url": "/assets/original/models/counter.glb",
+      "name": "counter",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.5,
+          0.030000001192092896,
+          -0.5
+        ],
+        "max": [
+          0.5,
+          0.7799999713897705,
+          0.512499988079071
+        ]
+      },
+      "bytes": 66952,
+      "sha256": "31577372751d500aa111b85ba162470fe4998604f8e2e2b0228ec2e409dd3e97",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "counter-flat": {
+      "url": "/assets/original/models/counter-flat.glb",
+      "name": "counter-flat",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.5,
+          0.030000001192092896,
+          -0.5
+        ],
+        "max": [
+          0.5,
+          0.7799999713897705,
+          0.512499988079071
+        ]
+      },
+      "bytes": 66956,
+      "sha256": "71a47da6fc4c3791cf1a04e9c5ecd7b68a7b2f40fb83045562a3573348f3fa66",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "griddle": {
+      "url": "/assets/original/models/griddle.glb",
+      "name": "griddle",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.5,
+          0.030000001192092896,
+          -0.5
+        ],
+        "max": [
+          0.5,
+          1.0199999809265137,
+          0.5320000052452087
+        ]
+      },
+      "bytes": 228996,
+      "sha256": "3376520151f7ae1114722c1d02994988e4c8e3661685a45b6ee499d6c5063657",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "pan": {
+      "url": "/assets/original/models/pan.glb",
+      "name": "pan",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.42500001192092896,
+          0.002499999711290002,
+          -0.4050000011920929
+        ],
+        "max": [
+          0.42500001192092896,
+          0.027499999850988388,
+          0.4050000011920929
+        ]
+      },
+      "bytes": 11548,
+      "sha256": "c26a6bdcb893ad8a506f2c825ecab4819d42f1cf6a30076fd6acd20e80319c57",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "fryer": {
+      "url": "/assets/original/models/fryer.glb",
+      "name": "fryer",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.5,
+          0.030000001192092896,
+          -0.5
+        ],
+        "max": [
+          0.5,
+          1.090000033378601,
+          0.512499988079071
+        ]
+      },
+      "bytes": 151788,
+      "sha256": "499df3194dbc6942e55b9db8a95c475f1e98fe4e028ff7c557404cdacea9481e",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "fryer-basket": {
+      "url": "/assets/original/models/fryer-basket.glb",
+      "name": "fryer-basket",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.33250001072883606,
+          0.005000000353902578,
+          -0.32499998807907104
+        ],
+        "max": [
+          0.33250001072883606,
+          0.125,
+          0.5799999833106995
+        ]
+      },
+      "bytes": 106684,
+      "sha256": "c772ce484774c9932ea9a3522ff2408075cd60f7a0852f81cfe64fe7dfa79828",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "board": {
+      "url": "/assets/original/models/board.glb",
+      "name": "board",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.3700000047683716,
+          0.004999999422580004,
+          -0.32499998807907104
+        ],
+        "max": [
+          0.3700000047683716,
+          0.06499999761581421,
+          0.32499998807907104
+        ]
+      },
+      "bytes": 64304,
+      "sha256": "b37ae28eba4674870744674e59602e6e95a5251549e7a5801ccde328a2b0f51a",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "serve": {
+      "url": "/assets/original/models/serve.glb",
+      "name": "serve",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.5,
+          0.030000001192092896,
+          -0.5
+        ],
+        "max": [
+          0.5,
+          0.8075000047683716,
+          0.512499988079071
+        ]
+      },
+      "bytes": 98972,
+      "sha256": "86ef1d80f1f4fa5858e710fde0a7766239e3497fc4ee7d8175fcedc38662e2f7",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "bin": {
+      "url": "/assets/original/models/bin.glb",
+      "name": "bin",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.3400000035762787,
+          0.014999991282820702,
+          -0.3400000035762787
+        ],
+        "max": [
+          0.3400000035762787,
+          0.7799999713897705,
+          0.3400000035762787
+        ]
+      },
+      "bytes": 44436,
+      "sha256": "875a39d42a4c4d02e9006f3da233730cceb9ccaa14a15eda5004adf84067e8a0",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "crate": {
+      "url": "/assets/original/models/crate.glb",
+      "name": "crate",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.4025000035762787,
+          2.6822091214739885e-9,
+          -0.35249999165534973
+        ],
+        "max": [
+          0.4025000035762787,
+          0.23999999463558197,
+          0.35249999165534973
+        ]
+      },
+      "bytes": 54816,
+      "sha256": "6f9fc32bd59a0a9d5740b3d118bdc2c4cc784d351b2fff4b468d1c0e155d53cd",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "plate": {
+      "url": "/assets/original/models/plate.glb",
+      "name": "plate",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.3400000035762787,
+          0.005000000353902578,
+          -0.3400000035762787
+        ],
+        "max": [
+          0.3400000035762787,
+          0.044999998062849045,
+          0.3400000035762787
+        ]
+      },
+      "bytes": 8916,
+      "sha256": "db4b59deb3f3beba1158268755317c1a8eb55d97c1b98f9c6f0f468dcf8dde38",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "tray": {
+      "url": "/assets/original/models/tray.glb",
+      "name": "tray",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.4375,
+          0.007499999832361937,
+          -0.35749998688697815
+        ],
+        "max": [
+          0.4375,
+          0.07999999821186066,
+          0.35749998688697815
+        ]
+      },
+      "bytes": 106664,
+      "sha256": "701f22d3c4017b8f05499460f3ff6450b91eb11c8c35cc71922664042b2624e5",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "drink-machine": {
+      "url": "/assets/original/models/drink-machine.glb",
+      "name": "drink-machine",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.32499998807907104,
+          0.030000001192092896,
+          -0.28999999165534973
+        ],
+        "max": [
+          0.32499998807907104,
+          0.8648176193237305,
+          0.3499999940395355
+        ]
+      },
+      "bytes": 113780,
+      "sha256": "d9b6b2d370324d3e49b54628467d20c8ca7ee9a1747417d63aa16aeac3fb2e20",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "bun": {
+      "url": "/assets/original/models/bun.glb",
+      "name": "bun",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.2800000011920929,
+          -0.12999999523162842,
+          -0.2800000011920929
+        ],
+        "max": [
+          0.2800000011920929,
+          0.25,
+          0.2800000011920929
+        ]
+      },
+      "bytes": 287212,
+      "sha256": "6530e7e4617160ed900eba8241314c2282e6cbe66cfd48662a322f0afb0117ee",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "bun-base": {
+      "url": "/assets/original/models/bun-base.glb",
+      "name": "bun-base",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.27000001072883606,
+          0.002500001573935151,
+          -0.27000001072883606
+        ],
+        "max": [
+          0.27000001072883606,
+          0.10750000178813934,
+          0.27000001072883606
+        ]
+      },
+      "bytes": 8932,
+      "sha256": "df5a8ce687b1f866c50d4ad05db73d6821e9708baf1d30d7e559109e5b385079",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "bun-lid": {
+      "url": "/assets/original/models/bun-lid.glb",
+      "name": "bun-lid",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.2800000011920929,
+          -0.12999999523162842,
+          -0.2800000011920929
+        ],
+        "max": [
+          0.2800000011920929,
+          0.25,
+          0.2800000011920929
+        ]
+      },
+      "bytes": 287216,
+      "sha256": "07554d5697641485dd997d9bc96036710850f29fa20ae937b28ab269e5e19482",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "patty-raw": {
+      "url": "/assets/original/models/patty-raw.glb",
+      "name": "patty-raw",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.2549999952316284,
+          0.002499999478459358,
+          -0.2549999952316284
+        ],
+        "max": [
+          0.2549999952316284,
+          0.09399999678134918,
+          0.2549999952316284
+        ]
+      },
+      "bytes": 232564,
+      "sha256": "9b3e5af3e39ee5a1b606bf91a59502399781ff2ae084ff73c6fad4164bc914dd",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "patty": {
+      "url": "/assets/original/models/patty.glb",
+      "name": "patty",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.2549999952316284,
+          0.002499999478459358,
+          -0.2549999952316284
+        ],
+        "max": [
+          0.2549999952316284,
+          0.09449999779462814,
+          0.2549999952316284
+        ]
+      },
+      "bytes": 63216,
+      "sha256": "6059cd5cb42fc947315405ef321b257e3cfc9ee825abbc3e492ef79b57db89bd",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "burnt": {
+      "url": "/assets/original/models/burnt.glb",
+      "name": "burnt",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.2549999952316284,
+          0.002499999478459358,
+          -0.2549999952316284
+        ],
+        "max": [
+          0.2549999952316284,
+          0.09449999779462814,
+          0.2549999952316284
+        ]
+      },
+      "bytes": 62240,
+      "sha256": "0bfea73250af5e5b380c99e9f3dec2ef59548163e1814a0a0416c3b62415e943",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "cheese": {
+      "url": "/assets/original/models/cheese.glb",
+      "name": "cheese",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.27641433477401733,
+          0.005999999586492777,
+          -0.27204886078834534
+        ],
+        "max": [
+          0.27641433477401733,
+          0.03400000184774399,
+          0.27204886078834534
+        ]
+      },
+      "bytes": 11600,
+      "sha256": "980b70f91f8760b0c722470fdc7846f3b204a2a575f2056b3dcf9f76323be691",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "potato": {
+      "url": "/assets/original/models/potato.glb",
+      "name": "potato",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.17000000178813934,
+          -0.03999999910593033,
+          -0.23999999463558197
+        ],
+        "max": [
+          0.17000000178813934,
+          0.23999999463558197,
+          0.23999999463558197
+        ]
+      },
+      "bytes": 112692,
+      "sha256": "1108ff367e1ae26653b81531a3b69a3c1d8798fd55a8711313672788f841ad29",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "potato-cut": {
+      "url": "/assets/original/models/potato-cut.glb",
+      "name": "potato-cut",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.20952509343624115,
+          0.010000000707805157,
+          -0.2149999886751175
+        ],
+        "max": [
+          0.22039175033569336,
+          0.14000000059604645,
+          0.1542229801416397
+        ]
+      },
+      "bytes": 94484,
+      "sha256": "65858144710146b75f6ea04709fb5044a4f3449c3860db61fdd29c1e2ba4f1c9",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "chicken-raw": {
+      "url": "/assets/original/models/chicken-raw.glb",
+      "name": "chicken-raw",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.23000000417232513,
+          0.004999999888241291,
+          -0.12999999523162842
+        ],
+        "max": [
+          0.23000000417232513,
+          0.13500000536441803,
+          0.12999999523162842
+        ]
+      },
+      "bytes": 28840,
+      "sha256": "662ba2c4b68c702e89325852cebf38425005467f24c0f6563d62cae2380f16c4",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "chicken-cut": {
+      "url": "/assets/original/models/chicken-cut.glb",
+      "name": "chicken-cut",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.23499999940395355,
+          0.004999999888241291,
+          -0.16847221553325653
+        ],
+        "max": [
+          0.20511233806610107,
+          0.13500000536441803,
+          0.1632273644208908
+        ]
+      },
+      "bytes": 139436,
+      "sha256": "5628d9c33c467e1ea414889fd44241fce81ed4083011158d1222d3823cff4850",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "fries": {
+      "url": "/assets/original/models/fries.glb",
+      "name": "fries",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.11768177151679993,
+          -0.009846777655184269,
+          -0.10436100512742996
+        ],
+        "max": [
+          0.12400062382221222,
+          0.3498467803001404,
+          0.11887510120868683
+        ]
+      },
+      "bytes": 94516,
+      "sha256": "a45402619713807686e4553d7edb52b2442aa653079236740af365531c28a68d",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "nuggets": {
+      "url": "/assets/original/models/nuggets.glb",
+      "name": "nuggets",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.23499999940395355,
+          0.004999999888241291,
+          -0.16847221553325653
+        ],
+        "max": [
+          0.20511233806610107,
+          0.13500000536441803,
+          0.1632273644208908
+        ]
+      },
+      "bytes": 139428,
+      "sha256": "b5782d91b05196894817497fe6ec904713614149160d0c8515e0b5849608ea15",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "cup": {
+      "url": "/assets/original/models/cup.glb",
+      "name": "cup",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.1720000058412552,
+          0.00499999662861228,
+          -0.1720000058412552
+        ],
+        "max": [
+          0.1720000058412552,
+          0.4505000114440918,
+          0.18240000307559967
+        ]
+      },
+      "bytes": 47808,
+      "sha256": "3e29c00d255f63ea39f25fe5ab59725baf42986d06c9743cf72c27ff71312d99",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "cola": {
+      "url": "/assets/original/models/cola.glb",
+      "name": "cola",
+      "kind": "prop",
+      "bounds": {
+        "min": [
+          -0.18000000715255737,
+          0.00499999662861228,
+          -0.18000000715255737
+        ],
+        "max": [
+          0.18000000715255737,
+          0.6801236271858215,
+          0.18240000307559967
+        ]
+      },
+      "bytes": 57584,
+      "sha256": "6d6758f51c54ed196ba8e875c8637fa8ddc5916af622e12edb21607f417f558c",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT"
+    },
+    "chef-player": {
+      "url": "/assets/original/models/chef-player.glb",
+      "name": "chef-player",
+      "kind": "character",
+      "bounds": {
+        "min": [
+          -0.37200000017881396,
+          0.14299999952316284,
+          -0.23999999463558197
+        ],
+        "max": [
+          0.37200000017881396,
+          1.3300000035762787,
+          0.3700000047683716
+        ]
+      },
+      "bytes": 545796,
+      "sha256": "781916567711f0302cd2f204f3e091cfe0faa150d58e405b93e6ccae7a33c76c",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT",
+      "grip": {
+        "node": "grip",
+        "position": [
+          0,
+          0.65,
+          0.38
+        ]
+      },
+      "rig": {
+        "leftArm": "leftArm",
+        "rightArm": "rightArm",
+        "leftLeg": "leftLeg",
+        "rightLeg": "rightLeg",
+        "head": "head",
+        "torso": "torso"
+      },
+      "animations": [
+        "idle",
+        "walk",
+        "carry",
+        "dash",
+        "chop",
+        "pour",
+        "acknowledge"
+      ]
+    },
+    "chef-a": {
+      "url": "/assets/original/models/chef-a.glb",
+      "name": "chef-a",
+      "kind": "character",
+      "bounds": {
+        "min": [
+          -0.37200000017881396,
+          0.14299999952316284,
+          -0.2150000035762787
+        ],
+        "max": [
+          0.37200000017881396,
+          1.49,
+          0.2529999911785126
+        ]
+      },
+      "bytes": 641632,
+      "sha256": "6f35923eaee66fee25fd726a092fb0bfb2893c94e2245758d9a83b999d4b3e28",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT",
+      "grip": {
+        "node": "grip",
+        "position": [
+          0,
+          0.65,
+          0.38
+        ]
+      },
+      "rig": {
+        "leftArm": "leftArm",
+        "rightArm": "rightArm",
+        "leftLeg": "leftLeg",
+        "rightLeg": "rightLeg",
+        "head": "head",
+        "torso": "torso"
+      },
+      "animations": [
+        "idle",
+        "walk",
+        "carry",
+        "dash",
+        "chop",
+        "pour",
+        "acknowledge"
+      ]
+    },
+    "chef-b": {
+      "url": "/assets/original/models/chef-b.glb",
+      "name": "chef-b",
+      "kind": "character",
+      "bounds": {
+        "min": [
+          -0.37200000017881396,
+          0.14299999952316284,
+          -0.25
+        ],
+        "max": [
+          0.37200000017881396,
+          1.3999999964237213,
+          0.2529999911785126
+        ]
+      },
+      "bytes": 717740,
+      "sha256": "312d011786e45262a1f0e91390ca014a1a2f8e135838dd29a8fc4fac73abf541",
+      "source": "Original parametric geometry, authored for McRush",
+      "license": "MIT",
+      "grip": {
+        "node": "grip",
+        "position": [
+          0,
+          0.65,
+          0.38
+        ]
+      },
+      "rig": {
+        "leftArm": "leftArm",
+        "rightArm": "rightArm",
+        "leftLeg": "leftLeg",
+        "rightLeg": "rightLeg",
+        "head": "head",
+        "torso": "torso"
+      },
+      "animations": [
+        "idle",
+        "walk",
+        "carry",
+        "dash",
+        "chop",
+        "pour",
+        "acknowledge"
+      ]
+    }
+  }
+}

@@ -1,0 +1,446 @@
+{
+  "schemaVersion": 1,
+  "recordedOn": "2026-10-23",
+  "status": "local-three-level-build; not a competition release candidate until outstanding acceptance is complete",
+  "rulesVersion": "mcd-three-shifts-2",
+  "machine": {
+    "chip": "Apple M2",
+    "memoryBytes": 8589934592,
+    "os": "macOS 27.0.1 (26A434)"
+  },
+  "viewport": {
+    "width": 1600,
+    "height": 900,
+    "quality": "balanced"
+  },
+  "checks": {
+    "typecheck": "passed",
+    "unitTests": 51,
+    "unitTestFiles": 10,
+    "assetValidation": {
+      "models": 31,
+      "errors": 0,
+      "warnings": 0,
+      "bytes": 4697748
+    },
+    "cleanExporterTests": 6,
+    "challengePreviewPersistenceBrowser": "passed on final source",
+    "privateDevelopmentRegression": {
+      "tests": 102,
+      "files": 19,
+      "scope": "Includes retained legacy tests; not the clean source test count"
+    }
+  },
+  "naturalKeyboardRounds": {
+    "first-shift": {
+      "method": "Headed Chromium, actual keyboard and visible UI, normal time, read-only test hook",
+      "elapsedSeconds": 275.595,
+      "metrics": {
+        "served": 10,
+        "onTime": 10,
+        "missed": 0,
+        "mistakes": 0,
+        "score": 828,
+        "combo": 4,
+        "bestCombo": 4,
+        "handoffs": 25,
+        "burnt": 0,
+        "averageWait": 20.634999999999998,
+        "contributions": {
+          "player": 3,
+          "a": 21,
+          "b": 19
+        }
+      },
+      "performance": {
+        "samples": 16122,
+        "elapsedSeconds": 268.86740000000003,
+        "p95": 17.3,
+        "p99": 18,
+        "max": 84.20000000000073,
+        "stalls": 1
+      },
+      "errors": []
+    },
+    "lunch-line": {
+      "method": "Headed Chromium, actual keyboard and visible UI, normal time, read-only test hook",
+      "elapsedSeconds": 319.034,
+      "metrics": {
+        "served": 13,
+        "onTime": 8,
+        "missed": 2,
+        "mistakes": 0,
+        "score": 1139,
+        "combo": 1,
+        "bestCombo": 4,
+        "handoffs": 35,
+        "burnt": 0,
+        "averageWait": 49.589743589743584,
+        "contributions": {
+          "player": 3,
+          "a": 37,
+          "b": 35
+        }
+      },
+      "performance": {
+        "samples": 19052,
+        "elapsedSeconds": 317.6313,
+        "p95": 18.4,
+        "p99": 18.7,
+        "max": 50.30000000001746,
+        "stalls": 0
+      },
+      "errors": []
+    },
+    "night-relay": {
+      "method": "Headed Chromium, actual keyboard and visible UI, normal time, read-only test hook",
+      "elapsedSeconds": 325.206,
+      "metrics": {
+        "served": 13,
+        "onTime": 8,
+        "missed": 3,
+        "mistakes": 0,
+        "score": 1158,
+        "combo": 0,
+        "bestCombo": 3,
+        "handoffs": 37,
+        "burnt": 0,
+        "averageWait": 48.24230769230769,
+        "contributions": {
+          "player": 3,
+          "a": 42,
+          "b": 33
+        }
+      },
+      "performance": {
+        "samples": 19405,
+        "elapsedSeconds": 323.9825,
+        "p95": 17.5,
+        "p99": 17.7,
+        "max": 133.29999999999995,
+        "stalls": 0
+      },
+      "errors": []
+    }
+  },
+  "installedChromeEndurance": {
+    "browser": "155.0.8059.85",
+    "coldStartMs": 3805,
+    "network": {
+      "downloadMbps": 20,
+      "latencyMs": 100,
+      "cache": false
+    },
+    "activeSeconds": 1200.5489,
+    "rounds": [
+      {
+        "round": 1,
+        "level": "lunch-line",
+        "challenge": "fryer-rush-2026-10-23",
+        "frames": 17894,
+        "seconds": 300.49969999999996,
+        "p95Ms": 17.6,
+        "p99Ms": 17.7,
+        "maxMs": 349.89999999999964,
+        "stallsOver2s": 0,
+        "gpu": {
+          "geometries": 150,
+          "textures": 18,
+          "programs": 8
+        },
+        "postGcHeapBytes": 12092000,
+        "domNodes": 1231,
+        "listeners": 243
+      },
+      {
+        "round": 2,
+        "level": "lunch-line",
+        "challenge": "fryer-rush-2026-10-23",
+        "frames": 17958,
+        "seconds": 300.01640000000003,
+        "p95Ms": 17.5,
+        "p99Ms": 17.7,
+        "maxMs": 467.4000000000233,
+        "stallsOver2s": 0,
+        "gpu": {
+          "geometries": 150,
+          "textures": 18,
+          "programs": 8
+        },
+        "postGcHeapBytes": 12867320,
+        "domNodes": 1200,
+        "listeners": 243
+      },
+      {
+        "round": 3,
+        "level": "lunch-line",
+        "challenge": "fryer-rush-2026-10-23",
+        "frames": 17971,
+        "seconds": 300.01640000000003,
+        "p95Ms": 17.6,
+        "p99Ms": 17.7,
+        "maxMs": 100.40000000002328,
+        "stallsOver2s": 0,
+        "gpu": {
+          "geometries": 150,
+          "textures": 18,
+          "programs": 8
+        },
+        "postGcHeapBytes": 13140348,
+        "domNodes": 1200,
+        "listeners": 243
+      },
+      {
+        "round": 4,
+        "level": "lunch-line",
+        "challenge": "fryer-rush-2026-10-23",
+        "frames": 17978,
+        "seconds": 300.01640000000003,
+        "p95Ms": 17.3,
+        "p99Ms": 17.6,
+        "maxMs": 217.19999999995343,
+        "stallsOver2s": 0,
+        "gpu": {
+          "geometries": 150,
+          "textures": 18,
+          "programs": 8
+        },
+        "postGcHeapBytes": 13048964,
+        "domNodes": 1200,
+        "listeners": 243
+      }
+    ],
+    "restarts": [
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12518292,
+        "nodes": 767,
+        "listeners": 185
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12465776,
+        "nodes": 735,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12485520,
+        "nodes": 735,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12496912,
+        "nodes": 735,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12436524,
+        "nodes": 767,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12575532,
+        "nodes": 735,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12546676,
+        "nodes": 735,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12574152,
+        "nodes": 735,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12610152,
+        "nodes": 735,
+        "listeners": 181
+      },
+      {
+        "geometries": 150,
+        "textures": 18,
+        "programs": 8,
+        "heap": 12617272,
+        "nodes": 735,
+        "listeners": 181
+      }
+    ],
+    "errors": [],
+    "notes": [
+      "GC only at results or restart resource snapshots, outside sampled gameplay.",
+      "Earlier collector includes all foreground intervals <=2s. These four rounds reported zero >2s stalls; the final collector also includes >2s intervals.",
+      "Isolated frame maxima of 100-467ms remain in the measurements; percentile targets do not mean zero stutter."
+    ]
+  },
+  "firstShiftQuietRepeat": {
+    "source": "Installed headed Google Chrome, passive player, 1600×900 balanced, whole normal-time round; includes all foreground intervals including stalls. No video or concurrent build.",
+    "browser": "155.0.8059.85",
+    "coldStartMs": 2836,
+    "network": {
+      "downloadMbps": 20,
+      "latencyMs": 100,
+      "cache": false
+    },
+    "levelId": "first-shift",
+    "metrics": {
+      "served": 10,
+      "onTime": 10,
+      "missed": 0,
+      "mistakes": 0,
+      "score": 872,
+      "combo": 4,
+      "bestCombo": 4,
+      "handoffs": 20,
+      "burnt": 0,
+      "averageWait": 22.131666666666668,
+      "contributions": {
+        "player": 0,
+        "a": 19,
+        "b": 24
+      }
+    },
+    "performance": {
+      "scope": "entire current round, foreground intervals including stalls",
+      "samples": 12543,
+      "elapsedSeconds": 209.65079999999998,
+      "p95": 18.2,
+      "p99": 18.6,
+      "max": 599.0999999999999,
+      "stalls": 0,
+      "stepCpuMs": 643.6000030040741,
+      "renderCpuMs": 13175.299992203712,
+      "accumulator": 0,
+      "rendering": {
+        "assets": [
+          "pan",
+          "counter",
+          "counter-flat",
+          "fryer-basket",
+          "board",
+          "fryer",
+          "bin",
+          "plate",
+          "griddle",
+          "serve",
+          "crate",
+          "tray",
+          "drink-machine",
+          "cheese",
+          "patty",
+          "chicken-raw",
+          "potato",
+          "potato-cut",
+          "patty-raw",
+          "chicken-cut",
+          "fries",
+          "bun",
+          "cup",
+          "cola",
+          "nuggets",
+          "bun-base",
+          "burnt",
+          "bun-lid",
+          "chef-player",
+          "chef-a",
+          "chef-b"
+        ],
+        "drawCalls": 169,
+        "triangles": 136754,
+        "geometries": 135,
+        "textures": 13,
+        "programs": 8,
+        "map": "first-shift",
+        "quality": "balanced"
+      }
+    },
+    "errors": []
+  },
+  "nativeSafari": {
+    "version": "27.0.1 (22625.1.29.11.28)",
+    "method": "Installed /Applications/Safari.app controlled through native UI, production build served locally on port 5185. Accessibility text and pixels observed, no injected game state.",
+    "observations": [
+      "All three levels selected and original scene assets loaded.",
+      "First-shift unclocked tutorial entered; WASD/E picked up raw patty, visible held-food label matched.",
+      "Normal prep: patty placed on counter; Q/1/E produced received item-assist; X visibly cancelled it; reissue led to Mika holding the patty with executing status.",
+      "A real new-tab switch paused the game; return displayed window-focus pause reason; visible Resume restored play.",
+      "Esc pause and same-level restart reset score, held item and prep timer to 20 seconds.",
+      "Night-relay actual tutorial entered, order and guide named dine-in window.",
+      "All HUD controls remained within the actual Safari window. Safari audio-active indicator appeared after start."
+    ],
+    "limits": [
+      "Targeted native smoke only; no complete three-round Safari benchmark.",
+      "Audio-active indicator does not prove human listening quality."
+    ],
+    "result": "passed-scoped-smoke"
+  },
+  "mcp": {
+    "mode": "explicit user query -> skill -> JSON -> preview -> adopt -> play",
+    "evidence": "mcp-evidence.json",
+    "gameplaySample": "../public/challenges/fryer-rush-2026-10-23.json"
+  },
+  "independentReview": {
+    "core": "implemented by core agent, reviewed by separate challenge agent; confirmed blockers fixed with regressions",
+    "presentation": "implemented by root, reviewed by separate core agent; queued command clearInput race fixed",
+    "challengeAndExport": "implemented by challenge agent, reviewed by root; targeted tests and clean rebuild"
+  },
+  "openAcceptance": [
+    "Three first-time human players without developer documentation: first-order comprehension, deliberate command and explanation of its effect, enjoyment and audio comfort.",
+    "Windows native Chrome and Edge.",
+    "No public push, deployment, signature or competition application authorized."
+  ],
+  "retainedFailures": [
+    "Initial long browser attempt: form select kept focus so test shortcut was ignored. Test now uses the visible command button; passing normal-time rerun retained separately.",
+    "First demo recording: browser stall and burnt patty while fetching a bun. Fixed recording takes cooked food off the grill immediately; complete three-level visual demo passed in 1.5 minutes.",
+    "One full first-shift keyboard round recovered from a >2s browser stall. Functional pass was kept separate; installed Chrome full-round passive repeat passed with zero >2s stalls.",
+    "An earlier unit run had two 5s timeouts while 18 workers competed with browser tests. Bounded workers passed all tests; original failure log retained."
+  ],
+  "demo": {
+    "method": "Headed Chromium, real keyboard and visible controls, unaccelerated game clock",
+    "scenes": [
+      "first-shift burger and handoff command",
+      "lunch-line conveyor",
+      "night-relay wrong-window rejection and correct delivery"
+    ],
+    "capture": "Playwright WebM video, transcoded to silent H.264 MP4; no simulated or generated gameplay frames",
+    "passed": true,
+    "durationSeconds": 85.96
+  },
+  "cleanSourceVerification": {
+    "method": "Independent reviewer copied allowlisted export into a new directory; npm ci --ignore-scripts --prefer-offline --no-audit --fund=false, no node_modules symlink",
+    "installedPackages": 71,
+    "typecheck": "passed",
+    "unitTests": 51,
+    "unitTestFiles": 10,
+    "build": "passed",
+    "assetCheck": "31 models, 4697748 bytes, 0 errors, 0 warnings",
+    "hashes": "123 SHA256SUMS entries verified for 122 payload files plus release manifest",
+    "warning": "Three.js minified chunk is 653.68 kB, above Vite 500 kB notice; measured cold start remains below budget"
+  }
+}

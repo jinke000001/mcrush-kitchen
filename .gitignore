@@ -1,0 +1,9 @@
+node_modules/
+dist/
+output/
+.env*
+*.pem
+test-results/
+playwright-report/
+.DS_Store
+._*
