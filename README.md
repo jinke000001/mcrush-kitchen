@@ -6,7 +6,7 @@
   <a href="https://github.com/jinke000001/mcrush-kitchen/issues/new/choose">试玩反馈</a>
 </p>
 <p align="center">
-  <img alt="Build & verify" src="https://github.com/jinke000001/mcrush-kitchen/actions/workflows/ci.yml/badge.svg">
+  <a href="https://github.com/jinke000001/mcrush-kitchen/actions/workflows/ci.yml"><img alt="Build & verify" src="https://github.com/jinke000001/mcrush-kitchen/actions/workflows/ci.yml/badge.svg?branch=main"></a>
   <img alt="版本 0.2.1" src="https://img.shields.io/badge/version-0.2.1-b9402c">
   <img alt="MIT license" src="https://img.shields.io/badge/license-MIT-304d47">
   <img alt="Desktop keyboard" src="https://img.shields.io/badge/play-desktop_keyboard-efbb56">
