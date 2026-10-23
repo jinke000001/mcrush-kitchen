@@ -13,7 +13,7 @@ function originalPublicAssets():Plugin {
         else if(entry.isFile())this.emitFile({type:'asset',fileName:file,source:await readFile(path.join('public',file))});
       }
     };
-    for(const dir of ['assets/original','audio','challenges'])await emit(dir);
+    for(const dir of ['assets/original','audio','challenges','media'])await emit(dir);
     for(const file of ['LICENSE','THIRD_PARTY_NOTICES.md'])this.emitFile({type:'asset',fileName:file,source:await readFile(file)});
   }};
 }

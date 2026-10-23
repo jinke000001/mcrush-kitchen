@@ -1,0 +1,29 @@
+name: 试玩反馈
+description: 告诉我们哪一步好玩、哪一步卡住了。
+title: '[试玩] '
+body:
+  - type: markdown
+    attributes:
+      value: '谢谢帮忙试玩！请勿贴出个人信息、Token 或会员资料。'
+  - type: textarea
+    id: device
+    attributes:
+      label: 电脑与浏览器
+      placeholder: 例如 Windows 11、Chrome，普通笔记本。
+  - type: dropdown
+    id: level
+    attributes:
+      label: 哪一关？
+      options: [开门第一班, 套餐高峰, 夜班接力, 展示页或其他]
+  - type: textarea
+    id: experience
+    attributes:
+      label: 发生了什么？
+      description: 想做什么、按了什么、实际发生什么；截图可以一起贴。
+    validations:
+      required: true
+  - type: textarea
+    id: teamwork
+    attributes:
+      label: 你有没有主动指挥伙伴？
+      description: 如果有，这次指挥帮上了什么忙？如果没有，哪里不明白？

@@ -10,10 +10,11 @@ const repositoryRoot = fileURLToPath(new URL('..', import.meta.url));
 const REQUIRED_FILES = [
   'package.json', 'package-lock.json', 'tsconfig.json', 'vite.config.ts', 'vitest.config.ts', 'playwright.config.ts',
   'index.html', 'README.md', 'LICENSE', 'THIRD_PARTY_NOTICES.md', 'ASSET_SOURCES.md', 'MCP_INTEGRATION.md', 'CONTEST_DECLARATION.md',
-  'mcp-config.example.json', 'docs/mcp-evidence.json', 'src/main.tsx', 'src/game/audio.ts',
+  'mcp-config.example.json', 'docs/mcp-evidence.json', 'src/main.tsx', 'src/showcase.ts', 'src/showcase.css', 'src/game/audio.ts', 'netlify.toml',
+  '.github/workflows/ci.yml', '.github/ISSUE_TEMPLATE/playtest.yml', 'scripts/make-promo.py',
   'scripts/make-original-assets.mjs', 'scripts/check-original-assets.mjs', 'scripts/make-audio.py', 'scripts/export-clean-release.mjs',
 ];
-const DIRECTORIES = ['src/kitchen', 'src/experience', 'src/challenges', 'public/assets/original', 'public/audio', 'public/challenges', 'skills/mcrush-theme-challenge'];
+const DIRECTORIES = ['src/kitchen', 'src/experience', 'src/challenges', 'public/assets/original', 'public/audio', 'public/challenges', 'public/media', 'docs/media', 'skills/mcrush-theme-challenge'];
 const OPTIONAL_FILES = ['scripts/export-clean-release.test.mjs', 'docs/verification.json', 'docs/preview.png'];
 const PRIVATE_MARKER = '<!-- PRIVATE_HISTORY:';
 const CODE = /\.(?:ts|tsx|js|mjs|css|html|py)$/;
@@ -55,7 +56,7 @@ async function collect(root) {
   const readme = files.get('README.md').toString('utf8'), marker = readme.indexOf(PRIVATE_MARKER);
   // An already-clean source export has no private marker and can itself be re-exported.
   files.set('README.md', Buffer.from((marker >= 0 ? readme.slice(0, marker) : readme).trimEnd() + '\n'));
-  files.set('.gitignore', Buffer.from('node_modules/\ndist/\noutput/\n.env*\n*.pem\ntest-results/\nplaywright-report/\n.DS_Store\n._*\n'));
+  files.set('.gitignore', Buffer.from('node_modules/\ndist/\n.netlify/\n.playwright-cli/\noutput/\n.env*\n*.pem\ntest-results/\nplaywright-report/\n.DS_Store\n._*\n'));
   return files;
 }
 
@@ -96,7 +97,7 @@ function validate(files) {
   if (lock.version !== pkg.version || lock.packages?.['']?.version !== pkg.version) throw new Error('package.json and package-lock.json versions disagree.');
   const packages = new Set(Object.keys({ ...pkg.dependencies, ...pkg.devDependencies }));
   for (const [file, bytes] of files) {
-    if (file.split('/').some(part => ignored(part) && part !== '.gitignore')) throw new Error('Excluded path entered the manifest: ' + file);
+    if (file.split('/').some(part => ignored(part) && !['.gitignore','.github'].includes(part))) throw new Error('Excluded path entered the manifest: ' + file);
     if (CODE.test(file)) {
       const text = bytes.toString('utf8');
       if (PRIVATE_PATH.test(text)) throw new Error('Private resource or machine-local path in ' + file);
@@ -110,7 +111,7 @@ function validate(files) {
         }
       }
       // Check literal public paths, including the prefixes used by bounded icon/audio lookups.
-      const publicPaths = file.startsWith('src/') || file === 'index.html' || file === 'scripts/make-original-assets.mjs' ? text.matchAll(/['"`](\/(?:assets|audio|challenges)\/[^'"`\s]*)['"`]/g) : [];
+      const publicPaths = file.startsWith('src/') || file === 'index.html' || file === 'scripts/make-original-assets.mjs' ? text.matchAll(/['"`](\/(?:assets|audio|challenges|media)\/[^'"`\s]*)['"`]/g) : [];
       for (const match of publicPaths) {
         const reference = match[1].split('${', 1)[0];
         if (reference.startsWith('/assets/') && !reference.startsWith('/assets/original/')) throw new Error('Public assets must use the original collection: ' + file);
