@@ -69,6 +69,12 @@
 
 独立非官方作品，不代表麦当劳官方背书。代码和原创资源按 [MIT](LICENSE) 分发；商标名称不因本许可获得授权。第三方运行库见 [许可原文](THIRD_PARTY_NOTICES.md)。参赛 [声明](CONTEST_DECLARATION.md) 仍是未署名草案。
 
+## 本次上线检查 · v0.2.1
+
+[GitHub CI](https://github.com/jinke000001/mcrush-kitchen/actions/runs/39934205029) 已通过；公开网页、影片与素材文件同本地审核构建一致。Mac Chrome 实际从首页进入游戏、播放宣传片，并在加载后主动断网：Mika 完成接续指令，Jin 仍正常送出首单，证明伙伴无需网络 AI 服务。断网时未缓存的食物小图标仍可能缺失；这不是离线安装版，首次打开仍需联网。
+
+本次另检查桌面与 390px 宽展示页、4 项短浏览器回归及独立发布内容审查；完整记录见 [verification.json](docs/verification.json)。手机宽度检查不等于手机实机验收，也不能保证所有地区网络都能访问 Netlify。
+
 ## 本地开发与部署
 
 ```bash
