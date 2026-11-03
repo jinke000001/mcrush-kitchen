@@ -14,6 +14,16 @@ function sessionClock() {
   let now=0;
   return {session,advance:(ms=20)=>frame(now+=ms)};
 }
+it('ignores partner-command keys during the first hands-on step',()=>{
+  const {session,advance}=sessionClock();
+  session.begin(true);advance();
+  expect(session.engine.readSnapshot().tutorial?.stage).toBe('burger');
+  session.setPanel('command');
+  session.assistContext('station');session.assistContext('order');session.assistContext('item');
+  advance();
+  expect(session.engine.readSnapshot().actors[1].assist).toBeNull();
+  session.stop();
+});
 it('closing the command panel in the same frame preserves an accepted assist',()=>{
   const {session,advance}=sessionClock();
   session.setPanel('command');

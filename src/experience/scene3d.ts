@@ -1,5 +1,5 @@
 import {
-  ACESFilmicToneMapping, AmbientLight, Box3, BoxGeometry, BufferGeometry, CanvasTexture, Color, DirectionalLight,
+  ACESFilmicToneMapping, AmbientLight, Box3, BoxGeometry, BufferGeometry, CanvasTexture, Color, ConeGeometry, CylinderGeometry, DirectionalLight,
   DoubleSide, EdgesGeometry, ExtrudeGeometry, Group, HemisphereLight, InstancedMesh, Line, LineBasicMaterial, LineSegments, Matrix4,
   Mesh, MeshBasicMaterial, MeshStandardMaterial, Object3D, OrthographicCamera, PCFShadowMap, PlaneGeometry,
   PMREMGenerator, Raycaster, RingGeometry, Scene, Shape, SphereGeometry, Sprite, SpriteMaterial, SRGBColorSpace, Vector3,
@@ -44,6 +44,7 @@ export class KitchenScene3D {
   private target = new Group();
   private targetPort: Mesh;
   private guideMark: Mesh;
+  private guideBeacon: Group;
   private resources = new Set<{ dispose(): void }>();
   private disposed = false;
   private observer: ResizeObserver | null = null;
@@ -65,8 +66,15 @@ export class KitchenScene3D {
   constructor() {
     const ring = new RingGeometry(.32, .4, 48), targetMat = new MeshBasicMaterial({ color: 0xffd34f, transparent: true, opacity: .8, side: DoubleSide, depthWrite: false });
     this.targetPort = new Mesh(ring, targetMat); this.targetPort.rotation.x = -Math.PI / 2;
-    this.guideMark = new Mesh(this.track(new RingGeometry(.29, .36, 48)), this.track(new MeshBasicMaterial({ color: 0xffcd4a, transparent: true, opacity: .85, side: DoubleSide, depthWrite: false })));
-    this.guideMark.rotation.x = -Math.PI / 2;
+    const beaconMat = this.track(new MeshBasicMaterial({ color: 0xffd24a, transparent: true, opacity: .92, depthWrite: false }));
+    this.guideMark = new Mesh(this.track(new RingGeometry(.46, .72, 48)), this.track(new MeshBasicMaterial({ color: 0xffc83d, transparent: true, opacity: .95, side: DoubleSide, depthWrite: false })));
+    this.guideMark.rotation.x = -Math.PI / 2; this.guideMark.renderOrder = 3;
+    const column = new Mesh(this.track(new CylinderGeometry(.07, .07, 1.15, 12)), beaconMat);
+    column.position.y = .72;
+    const arrow = new Mesh(this.track(new ConeGeometry(.22, .4, 16)), beaconMat);
+    arrow.rotation.x = Math.PI; arrow.position.y = 1.42;
+    this.guideBeacon = new Group(); this.guideBeacon.add(column, arrow);
+    this.guideMark.visible = false; this.guideBeacon.visible = false;
     this.track(ring); this.track(targetMat);
   }
   private track<T extends { dispose(): void }>(resource: T): T { this.resources.add(resource); return resource; }
@@ -100,7 +108,7 @@ export class KitchenScene3D {
       this.buildEnvironment(); this.buildStations();
       this.customers=buildDecor(this.scene,this.level,{box:(...args)=>this.box(...args),material:(...args)=>this.material(...args),sign:(...args)=>this.sign(...args),track:r=>this.track(r)});
       this.batchStatic(); this.buildActors(session.engine.readSnapshot());
-      this.scene.add(this.objects, this.targetPort, this.guideMark, this.target);
+      this.scene.add(this.objects, this.targetPort, this.guideMark, this.guideBeacon, this.target);
       this.resize();
       session.setLoading({ loaded: REQUIRED_ASSETS.length, total: REQUIRED_ASSETS.length, label: '点亮厨房' });
       session.setIcons(Object.fromEntries(Object.keys(ITEM_NAMES).map(kind=>[kind,'/assets/original/icons/'+kind+'.svg'])));
@@ -377,6 +385,12 @@ export class KitchenScene3D {
     }
     for (const [id, drawing] of this.items) if (!alive.has(id)) { drawing.node.removeFromParent(); this.items.delete(id); }
     const preview = session.engine.getInteractionPreview(), guide = session.engine.getGuide();
+    for (const station of w.stations) {
+      const draw = this.stations.get(station.id); if (!draw) continue;
+      const goal = !menu && !!w.tutorial && guide.stationId === station.id;
+      draw.label.classList.toggle('is-goal', goal);
+      if (goal) { draw.label.hidden = false; if (!draw.caption.textContent?.startsWith('目标')) draw.caption.textContent = '目标 · ' + draw.caption.textContent; }
+    }
     const player = w.actors[0];
     if (this.throwArc) {
       this.throwArc.visible = !menu && player.throwCharge > 0 && !!player.heldId;
@@ -387,13 +401,30 @@ export class KitchenScene3D {
         position.needsUpdate = true; this.throwArc.geometry.computeBoundingSphere();
       }
     }
+    const goalStation = guide.stationId ? w.stations.find(s => s.id === guide.stationId) : undefined;
+    const facingGoal = !!w.tutorial && preview?.stationId === guide.stationId;
     this.target.visible = !menu && !!preview?.stationId; this.targetPort.visible = false;
     if (preview?.stationId && !menu) {
       const station = w.stations.find(s => s.id === preview.stationId)!; this.target.position.set(station.x + .5, this.stations.get(station.id)!.top + .04, station.y + .5);
-      const material = (this.target.children[0] as LineSegments).material as LineBasicMaterial; material.color.set(preview.valid ? 0xffeda5 : 0xe7774e);
+      const material = (this.target.children[0] as LineSegments).material as LineBasicMaterial;
+      material.color.set(preview.valid ? (w.tutorial && !facingGoal ? 0xc8b89a : 0xffeda5) : 0xe7774e);
+      material.opacity = w.tutorial && !facingGoal ? .35 : .9;
     }
-    this.guideMark.visible = !menu && !!w.tutorial && !!guide.stationId;
-    if (this.guideMark.visible && guide.stationId) { const station = w.stations.find(s => s.id === guide.stationId)!; const p = station.ports[0]; this.guideMark.position.set(p.x + .5, .06, p.y + .5); this.guideMark.scale.setScalar(1 + Math.sin(seconds * 4) * .08); }
+    const showGoal = !menu && !!w.tutorial && (!!goalStation || !!guide.position);
+    this.guideMark.visible = showGoal; this.guideBeacon.visible = showGoal;
+    if (showGoal) {
+      const pulse = this.preferences.reducedEffects ? 1 : 1 + Math.sin(seconds * 4) * .12;
+      if (goalStation) {
+        const port = goalStation.ports[0], top = this.stations.get(goalStation.id)?.top ?? .8;
+        this.guideMark.position.set(port.x + .5, .08, port.y + .5);
+        this.guideBeacon.position.set(goalStation.x + .5, top + .05, goalStation.y + .5);
+      } else if (guide.position) {
+        this.guideMark.position.set(guide.position.x, .08, guide.position.y);
+        this.guideBeacon.position.set(guide.position.x, .2, guide.position.y);
+      }
+      this.guideMark.scale.setScalar(pulse);
+      this.guideBeacon.position.y += this.preferences.reducedEffects ? 0 : Math.sin(seconds * 3) * .06;
+    }
     const event = [...w.events].reverse().find(event => event.type === 'serve' || event.type === 'reject' || event.type === 'burnt');
     const age = event ? (w.tick - event.tick) / HZ : 10;
     this.popup.hidden = !event || age > 2 || menu;
