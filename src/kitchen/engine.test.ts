@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { KitchenEngine } from './engine';
+import { resolvePlayerPrompt, tutorialCommandMode } from './tutorial-coach';
 import { center } from './map';
 import { HZ, type Dish, type KitchenCommand, type KitchenSnapshot, type Point } from './types';
 
@@ -99,6 +100,31 @@ describe('kitchen commands and public food', () => {
     expect(one.getSnapshot()).toEqual(two.getSnapshot()); const copy = one.getSnapshot(); copy.actors[0].x = 999; copy.items.length = 0; expect(one.getSnapshot().actors[0].x).not.toBe(999);
     expect(one.commandLog).toEqual(two.commandLog);
   });
+  it('highlights the meat rack first and keeps held-item hints on the same action', () => {
+    const e = new KitchenEngine({ tutorial: true, ai: false });
+    expect(e.getGuide().stationId).toBe('meat');
+    expect(e.getGuide().text).not.toContain('面包');
+    expect(tutorialCommandMode(e.readSnapshot().tutorial, e.getGuide().title)).toBe('locked');
+    e.step([{ type: 'interact' }]);
+    expect(e.getSnapshot().hint).not.toMatch(/放下|放在地上|放在这里/);
+    use(e, 'meat'); use(e, 'grill-a');
+    expect(e.getGuide().stationId).toBe('bun');
+    expect(e.readSnapshot().tutorial?.text).toContain('面包');
+    use(e, 'bun');
+    const heldId = player(e).heldId;
+    let guard = 0;
+    while (Math.hypot(player(e).x - 4.5, player(e).y - 8.5) > .2 && guard++ < 500) { const p = player(e); frame(e, [{ type: 'move', x: 4.5 - p.x, y: 8.5 - p.y }]); }
+    frame(e, [{ type: 'move', x: 0, y: 1 }]); frame(e, [{ type: 'move', x: 0, y: 0 }]);
+    const preview = e.getInteractionPreview(), guide = e.getGuide();
+    expect(preview?.label).toBe('放在地上');
+    const prompt = resolvePlayerPrompt({ tutorial: e.readSnapshot().tutorial, held: true, preview, guide, hint: '靠近空台面放下' });
+    expect(prompt.action).toBe(prompt.corner);
+    expect(prompt.action).toBe('把面包放到台面');
+    expect(prompt.action).not.toContain('放在地上');
+    frame(e, [{ type: 'interact' }]);
+    expect(player(e).heldId).toBe(heldId);
+    expect(e.getSnapshot().hint).toBe('把面包放到台面');
+  });
   it('teaches a burger and handoff, reserves combo packing for the player, then resets only after the player serves', () => {
     const e = new KitchenEngine({ tutorial: true, prepSeconds: 20 });
     makeBurger(e); use(e, 'serve-a'); expect(e.getSnapshot().tutorial?.stage).toBe('handoff');
@@ -109,6 +135,7 @@ describe('kitchen commands and public food', () => {
     const handedOffItem = e.getSnapshot().stations.find(station => station.id === 'pass-n0')!.itemId!;
     wait(e, 3 * HZ); expect(e.getSnapshot().stations.find(station => station.id === 'pass-n0')?.itemId).toBe(handedOffItem);
     expect(e.getGuide().title).toBe('现在指挥一次接力');
+    expect(tutorialCommandMode(e.readSnapshot().tutorial, e.getGuide().title)).toBe('continue');
     frame(e, [{ type: 'assist', actorId: 'a', target: { type: 'item', id: handedOffItem } }]);
     let handoffGuard = 0;
     while (e.readSnapshot().actors[1].heldId !== handedOffItem && handoffGuard++ < 10 * HZ) frame(e);

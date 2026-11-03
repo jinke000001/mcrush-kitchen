@@ -5,6 +5,7 @@ import { evaluateShift } from './rating';
 import { makeOrders } from './orders';
 import { burgerParts, DISH_NAMES, isDish, ITEM_NAMES, sameDishes } from './recipes';
 import { KitchenRules } from './rules';
+import { resolvePlayerPrompt } from './tutorial-coach';
 import { HZ, RULES_VERSION, type LevelDefinition, type ReadonlyKitchenSnapshot, type ActorId, type Dish, type KitchenActor, type KitchenCommand, type KitchenEvent, type KitchenGuide, type KitchenOptions, type KitchenSnapshot, type KitchenStation, type Point } from './types';
 
 const metrics = (): KitchenSnapshot['metrics'] => ({ served: 0, onTime: 0, missed: 0, mistakes: 0, score: 0, combo: 0, bestCombo: 0, handoffs: 0, burnt: 0, averageWait: null, contributions: { player: 0, a: 0, b: 0 } });
@@ -36,7 +37,7 @@ export class KitchenEngine {
     this.rules = new KitchenRules(this.world, event => this.emit(event)); this.ai = new KitchenAI(this.rules);
   }
   private freshWorld(tutorial: boolean): KitchenSnapshot {
-    return { rulesVersion: RULES_VERSION, levelId: this.level.id, seed: this.options.seed!, tick: 0, serviceTick: 0, phase: tutorial ? 'tutorial' : this.options.prepSeconds! > 0 ? 'prep' : 'service', phaseRemaining: tutorial ? 0 : Math.round((this.options.prepSeconds! > 0 ? this.options.prepSeconds! : this.options.serviceSeconds!) * HZ), actors: actors(this.level), stations: makeStations(this.level.stations), items: [], orders: tutorial ? [{ ...tutorialOrder('练习1', this.level.mechanic === 'handoff' ? ['burger'] : ['cola']), ...(this.level.mechanic === 'windows' ? { channel: 'dine-in' as const } : {}) }] : makeOrders(this.options), metrics: metrics(), priorityOrderId: null, tutorial: tutorial ? this.level.mechanic === 'conveyor' ? { stage: 'conveyor', step: 1, total: 3, title: '把可乐送上传餐带', text: '接一杯可乐，放在传餐带最左端；等它向右移动，再从末端接走出餐。满载时会停住，旁边始终可以绕行。', targetStationId: 'cups' } : this.level.mechanic === 'windows' ? { stage: 'windows', step: 1, total: 2, title: '认准堂食窗口', text: '接一杯可乐，送到左侧堂食窗口；订单卡会明确标出窗口。', targetStationId: 'cups' } : { stage: 'burger', step: 1, total: 3, title: '1 · 亲手做一份牛肉堡', text: '拿生肉饼放到煎台；趁它烹饪拿面包放在台面上，再把熟肉饼叠上去。', targetStationId: 'meat' } : null, hint: 'WASD 移动 · E 取放 · 按住 Space 切配/接饮', events: [], wave: null, mechanicProgress: { conveyorTransfers: 0, playerConveyorLoads: 0, playerConveyorRetrievals: 0, correctWindowServes: 0, assistsCompleted: 0 }, shiftRating: null };
+    return { rulesVersion: RULES_VERSION, levelId: this.level.id, seed: this.options.seed!, tick: 0, serviceTick: 0, phase: tutorial ? 'tutorial' : this.options.prepSeconds! > 0 ? 'prep' : 'service', phaseRemaining: tutorial ? 0 : Math.round((this.options.prepSeconds! > 0 ? this.options.prepSeconds! : this.options.serviceSeconds!) * HZ), actors: actors(this.level), stations: makeStations(this.level.stations), items: [], orders: tutorial ? [{ ...tutorialOrder('练习1', this.level.mechanic === 'handoff' ? ['burger'] : ['cola']), ...(this.level.mechanic === 'windows' ? { channel: 'dine-in' as const } : {}) }] : makeOrders(this.options), metrics: metrics(), priorityOrderId: null, tutorial: tutorial ? this.level.mechanic === 'conveyor' ? { stage: 'conveyor', step: 1, total: 3, title: '把可乐送上传餐带', text: '接一杯可乐，放在传餐带最左端；等它向右移动，再从末端接走出餐。满载时会停住，旁边始终可以绕行。', targetStationId: 'cups' } : this.level.mechanic === 'windows' ? { stage: 'windows', step: 1, total: 2, title: '认准堂食窗口', text: '接一杯可乐，送到左侧堂食窗口；订单卡会明确标出窗口。', targetStationId: 'cups' } : { stage: 'burger', step: 1, total: 3, title: '1 · 亲手做一份牛肉堡', text: '肉饼架在发光。走过去，面向它按 E。', targetStationId: 'meat' } : null, hint: 'WASD 移动 · E 取放 · 按住 Space 切配/接饮', events: [], wave: null, mechanicProgress: { conveyorTransfers: 0, playerConveyorLoads: 0, playerConveyorRetrievals: 0, correctWindowServes: 0, assistsCompleted: 0 }, shiftRating: null };
   }
   get commandLog(): readonly { tick: number; command: KitchenCommand }[] { return structuredClone(this.log); }
   getSnapshot(): KitchenSnapshot { return structuredClone(this.world); }
@@ -67,7 +68,19 @@ export class KitchenEngine {
         else if (command.held) this.input.throwing = true;
         else if (this.input.throwing) { this.rules.throw(player); this.input.throwing = false; }
         break;
-      case 'interact': this.rules.interact(player); break;
+      case 'interact': {
+        // During a lesson, don't drop food on the floor or flash a "put down" line that disagrees with the glowing station.
+        if (this.world.tutorial) {
+          const preview = this.rules.preview(player), guide = this.getGuide();
+          const aligned = !!preview?.valid && !!guide.stationId && preview.stationId === guide.stationId;
+          const groundDrop = preview?.action === 'put' && !preview.stationId;
+          if (guide.stationId && !aligned && (groundDrop || !preview?.valid)) {
+            this.emit({ type: 'reject', actorId: player.id, message: guide.title });
+            break;
+          }
+        }
+        this.rules.interact(player); break;
+      }
       case 'role': {
         const actor = this.rules.actor(command.actorId); actor.role = command.role; this.emit({ type: 'role', actorId: actor.id, message: actor.name + '已调整岗位，放好当前物品后接新任务' }); break;
       }
@@ -163,8 +176,47 @@ export class KitchenEngine {
     const activeHandoffInstruction = this.world.actors.some(actor => actor.assist?.target.type === 'item' && actor.assist.target.id === this.handoffItemId && ['received', 'waiting', 'executing', 'completed'].includes(actor.assist.status));
     const tutorialAllowed = !this.world.tutorial || this.world.tutorial.stage === 'combo' || (this.world.tutorial.stage === 'handoff' && this.handedOff && (activeHandoffInstruction || this.handoffInstructionCompleted || this.world.actors.some(actor => actor.id !== 'player' && actor.heldId === this.handoffItemId)));
     this.ai.step(!!this.options.ai && tutorialAllowed); this.clock();
-    if (this.world.tutorial) { const guide = this.getGuide(); this.world.tutorial.targetStationId = guide.stationId; }
+    if (this.world.tutorial) {
+      const guide = this.getGuide(), tutorial = this.world.tutorial, actor = this.rules.actor('player');
+      tutorial.targetStationId = guide.stationId;
+      if (tutorial.stage === 'burger') tutorial.text = guide.text;
+      this.world.hint = resolvePlayerPrompt({ tutorial, held: !!actor.heldId, preview: this.rules.preview(actor), guide, hint: this.world.hint }).corner;
+    }
     return structuredClone(this.currentEvents);
+  }
+  /** One glowing station per beat of the first lesson, so the card does not send players to bread too early. */
+  private burgerGuide(held: { kind: string } | undefined): KitchenGuide | null {
+    const station = (id: string) => this.world.stations.find(s => s.id === id);
+    const answer = (title: string, text: string, target?: KitchenStation): KitchenGuide => ({ title, text, stationId: target?.id ?? null, position: target ? center(target) : null });
+    const placed = (kind: string) => this.world.items.find(i => i.kind === kind && i.location.type === 'station');
+    const at = (item: KitchenSnapshot['items'][number] | undefined) => item?.location.type === 'station' ? station(item.location.stationId) : undefined;
+    const emptyCounter = () => this.world.stations.find(s => s.kind === 'counter' && s.zone === 'handoff' && !s.itemId) ?? this.world.stations.find(s => s.kind === 'counter' && !s.itemId);
+    const emptyGrill = () => this.world.stations.find(s => s.kind === 'grill' && !s.itemId);
+    if (held?.kind === 'burnt' || (held && !['burger', 'cheeseburger', 'patty', 'bun', 'rawPatty', 'assembly'].includes(held.kind))) return null;
+    const bunDown = placed('bun') ?? placed('assembly');
+    const burgerDown = placed('burger') ?? placed('cheeseburger');
+    const pattyDown = placed('patty');
+    const ready = this.world.stations.find(s => s.kind === 'grill' && s.state === 'ready');
+    const cooking = this.world.stations.find(s => s.kind === 'grill' && !!s.itemId);
+    if (held?.kind === 'burger' || held?.kind === 'cheeseburger') return answer('送到出餐口', '下方出餐口在发光。走过去，面向它按 E 交付。', station('serve-a'));
+    if (held?.kind === 'assembly') return answer('把汉堡补齐', '面包和熟肉饼要在同一处发光的台面上。', at(pattyDown) ?? at(bunDown) ?? emptyCounter());
+    if (held?.kind === 'patty') {
+      const base = at(bunDown);
+      return base ? answer('把熟肉饼叠上面包', '走到放着面包的发光台面，面向它按 E。', base) : answer('把熟肉饼放到台面', '先把熟肉饼放到发光的空台面上，再去拿面包。', emptyCounter());
+    }
+    if (held?.kind === 'bun') {
+      const base = at(pattyDown);
+      return base ? answer('把面包叠上熟肉饼', '走到放着熟肉饼的发光台面，面向它按 E。', base) : answer('把面包放到台面', '把面包放到发光的空台面上，面向它按 E。', emptyCounter());
+    }
+    if (held?.kind === 'rawPatty') return answer('把肉饼放上煎台', '左侧煎台在发光。走过去，面向它按 E。', emptyGrill() ?? station('grill-a'));
+    if (burgerDown) return answer('拿起牛肉堡', '牛肉堡在发光的台面上。面向它按 E 拿起，再去出餐。', at(burgerDown));
+    if (ready) return answer('取走熟肉饼', '煎台已经变绿。面向发光的煎台按 E 拿起。', ready);
+    if (pattyDown && bunDown) return answer('拿起熟肉饼', '熟肉饼在台面上。面向它按 E 拿起，再叠到面包上。', at(pattyDown));
+    if (cooking && !bunDown) return answer('去拿面包', '煎台会自己烹饪。现在去发光的面包架，面向它按 E。', station('bun'));
+    if (cooking && bunDown) return answer('等肉饼变绿', '面包先放着。肉饼变绿后，到发光的煎台按 E 拿起。', cooking);
+    if (pattyDown) return answer('去拿面包', '熟肉饼先放着。去发光的面包架，面向它按 E。', station('bun'));
+    if (bunDown) return answer('去拿生肉饼', '面包先放着。肉饼架在发光，面向它按 E。', station('meat'));
+    return answer('去拿生肉饼', '肉饼架在发光。走过去，面向它按 E。', station('meat'));
   }
   getGuide(): KitchenGuide {
     const player = this.rules.actor('player'), held = this.rules.item(player.heldId), preview = this.rules.preview(player), tutorial = this.world.tutorial;
@@ -220,6 +272,7 @@ export class KitchenEngine {
         }
       }
     }
+    if (tutorial?.stage === 'burger') { const focused = this.burgerGuide(held); if (focused) return focused; }
     if (held) {
       if (held.kind === 'burnt') return answer('清理焦糊食物', '带到回收桶按 E，再做新的一份。', station('bin'));
       if (held.kind === 'rawPatty') return answer('把肉饼放上煎台', 'E 放下后会自动烹饪，可以去准备面包；绿色后及时取走。', firstEmpty('grill'));

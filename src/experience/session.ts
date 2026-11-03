@@ -1,4 +1,5 @@
 import { KitchenEngine } from '../kitchen/engine';
+import { tutorialCommandMode } from '../kitchen/tutorial-coach';
 import { HZ, type KitchenCommand, type KitchenEvent, type KitchenOptions, type KitchenSnapshot, type LevelId, type AssistTarget } from '../kitchen/types';
 import { audio } from '../game/audio';
 import type { AssetProgress } from './assets';
@@ -90,7 +91,10 @@ export class KitchenSession {
   chooseActor(actorId:'a'|'b') { this.publish({commandActor:actorId}); }
   assist(target:AssistTarget) { this.command({type:'assist',actorId:this.view.commandActor,target}); }
   assistContext(kind:'item'|'station'|'order') {
-    const w=this.engine.readSnapshot(),preview=this.engine.getInteractionPreview();
+    const w=this.engine.readSnapshot(), mode=tutorialCommandMode(w.tutorial, this.engine.getGuide().title);
+    if(mode==='locked' || (mode==='continue' && kind!=='item')) return;
+    if(mode==='continue') this.chooseActor('a');
+    const preview=this.engine.getInteractionPreview();
     const id=kind==='item'?(w.actors[0].heldId??preview?.itemId):kind==='station'?preview?.stationId:(w.priorityOrderId??w.orders.find(o=>o.status==='active'||o.status==='late')?.id);
     if(id)this.assist({type:kind,id});
   }
@@ -125,7 +129,8 @@ export class KitchenSession {
     const paused = panel === 'pause';
     this.clearInput(paused);
     if (paused !== this.view.paused) { audio.pause(paused); this.resetClock = true; }
-    this.publish({ panel, paused, pauseReason: paused ? this.view.pauseReason : '' });
+    const commandActor = panel === 'command' && tutorialCommandMode(this.engine.readSnapshot().tutorial, this.engine.getGuide().title) === 'continue' ? 'a' as const : this.view.commandActor;
+    this.publish({ panel, paused, pauseReason: paused ? this.view.pauseReason : '', commandActor });
   }
   pause(reason = '') {
     if (this.view.screen !== 'game' || this.view.game.phase === 'results') return;
@@ -164,10 +169,13 @@ export class KitchenSession {
     if (event.code === 'Tab' && this.view.panel !== 'command') { event.preventDefault(); if (!event.repeat) this.setPanel(this.view.panel === 'orders' ? 'none' : 'orders'); return; }
     if (this.view.panel === 'command') {
       if(event.repeat)return;
+      const mode=tutorialCommandMode(this.engine.readSnapshot().tutorial, this.engine.getGuide().title);
+      if(mode==='locked') return;
+      if(mode==='continue' && (event.code==='Digit2'||event.code==='KeyR'||event.code==='KeyT')) return;
       if(event.code==='Digit1'||event.code==='Digit2'){event.preventDefault();this.chooseActor(event.code==='Digit1'?'a':'b');return;}
       const kind=({KeyE:'item',KeyR:'station',KeyT:'order'} as const)[event.code as 'KeyE'|'KeyR'|'KeyT'];
       if(kind){event.preventDefault();this.assistContext(kind);return;}
-      if(event.code==='KeyX'){event.preventDefault();this.command({type:'assist-cancel',actorId:this.view.commandActor});return;}
+      if(event.code==='KeyX'){event.preventDefault();this.command({type:'assist-cancel',actorId:mode==='continue'?'a':this.view.commandActor});return;}
     }
     if (this.view.panel !== 'none') return;
     if (!['KeyW', 'KeyA', 'KeyS', 'KeyD', 'KeyE', 'Space', 'KeyF', 'ShiftLeft', 'ShiftRight'].includes(event.code)) return;

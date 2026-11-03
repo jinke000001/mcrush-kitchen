@@ -98,7 +98,7 @@ export class KitchenRules {
     }
     if (station.kind === 'bin') return held ? allow('discard', '丢弃' + ITEM_NAMES[held.kind]) : deny('手里没有需要丢弃的物品');
     if (!held) {
-      if (!stored) return deny('空台面 · 把物品放在这里');
+      if (!stored) return deny('空台面');
       const process = PROCESS[stored.kind];
       if (process?.station === station.kind && ['chop', 'drink'].includes(station.kind)) result.workLabel = station.kind === 'chop' ? '按住 Space 切配' : '按住 Space 接可乐';
       if (stored.kind === 'tray' && stored.contents.length) result.workLabel = '按 Space 取出最后一件';
